@@ -25,7 +25,13 @@ const postCourse = async (title) => {
     const course = new course_model({
       title: title,
     });
-    await course.save();
+    const savedCourse = await course.save();
+    const course_id = savedCourse._id;
+    const enrollment = new enrollment_model({
+      course: course_id,
+      student: [],
+    });
+    await enrollment.save();
     return `${title} added to Courses`;
   } catch (err) {
     console.error("Error in postCourse:", err);

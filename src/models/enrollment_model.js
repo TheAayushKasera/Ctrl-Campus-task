@@ -9,7 +9,7 @@ const enrollment_Schema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Students",
-      required: true,
+      required: false,
     },
   ],
 });
