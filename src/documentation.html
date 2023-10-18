@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ctrl Campus Task Documentation</title>
+    <style>
+      /* Add your custom CSS styles here */
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ctrl Campus Task Documentation</h1>
+
+    <h2>Project Setup</h2>
+
+    <p>To set up and run this project, follow these steps:</p>
+    <ol>
+      <li>Clone the repository from GitHub.</li>
+      <li>Install the necessary dependencies using npm:</li>
+      <pre><code>npm install</code></pre>
+      <li>Start the server:</li>
+      <pre><code>node src/index.js</code></pre>
+    </ol>
+
+    <h2>Dependencies</h2>
+
+    <p>The project uses the following npm dependencies:</p>
+
+    <ul>
+      <li>
+        <strong>body-parser:</strong> Parse incoming request bodies in a
+        middleware before your handlers, available under req.body.
+      </li>
+      <li>
+        <strong>cors:</strong> Middleware that can be used to enable CORS
+        (Cross-Origin Resource Sharing) with various options.
+      </li>
+      <li>
+        <strong>dotenv:</strong> Loads environment variables from a .env file
+        into process.env, making them accessible to your application.
+      </li>
+      <li>
+        <strong>express:</strong> Fast, unopinionated, minimalist web framework
+        for Node.js.
+      </li>
+      <li>
+        <strong>mongoose:</strong> Elegant MongoDB object modeling for Node.js.
+      </li>
+    </ul>
+
+    <h2>API Endpoints</h2>
+
+    <p>The following API endpoints are available:</p>
+
+    <h3>Students</h3>
+
+    <p>
+      Note: Names in the student model may be the same, so CRUD operations are
+      based on unique student IDs.
+    </p>
+
+    <ul>
+      <li><strong>GET /student</strong>: Get a list of all students.</li>
+      <li>
+        <strong>GET /student/:id</strong>: Get a specific student by ID. Use
+        student ID for CRUD operations.
+      </li>
+      <li>
+        <strong>POST /student</strong>: Add a new student. Body should contain a
+        JSON object with the student's name.
+      </li>
+      <li>
+        <strong>PUT /student</strong>: Update a student's name. Query
+        parameters: id (student ID), name (new name).
+      </li>
+      <li><strong>DELETE /student/:id</strong>: Delete a student by ID.</li>
+    </ul>
+
+    <h3>Courses</h3>
+
+    <p>
+      Note: Titles in the course model may be the same, so CRUD operations are
+      based on unique course IDs.
+    </p>
+
+    <ul>
+      <li><strong>GET /course</strong>: Get a list of all courses.</li>
+      <li>
+        <strong>GET /course/:id</strong>: Get a specific course by ID. Use
+        course ID for CRUD operations.
+      </li>
+      <li>
+        <strong>POST /course</strong>: Add a new course. Body should contain a
+        JSON object with the course's title.
+      </li>
+      <li>
+        <strong>PUT /course</strong>: Update a course's title. Query parameters:
+        id (course ID), title (new title).
+      </li>
+      <li><strong>DELETE /course/:id</strong>: Delete a course by ID.</li>
+    </ul>
+
+    <h3>Enrollments</h3>
+
+    <ul>
+      <li><strong>GET /enrollment</strong>: Get a list of all enrollments.</li>
+      <li>
+        <strong>GET /enrollment/:course_id</strong>: Get a list of students
+        enrolled in a specific course.
+      </li>
+      <li>
+        <strong>POST /enrollment</strong>: Enroll a student in a course. Body
+        should contain a JSON object with student_id and course_id.
+      </li>
+    </ul>
+  </body>
+</html>
