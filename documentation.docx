@@ -47,3 +47,10 @@ Enrollments
 - GET /enrollment: Get a list of all enrollments.
 - GET /enrollment/:course_id: Get a list of students enrolled in a specific course.
 - POST /enrollment: Enroll a student in a course. Body should contain a JSON object with student_id and course_id.
+
+You can explore my portfolio and learn more about my projects and skills through the following links:
+
+GitHub Profile: https://github.com/TheAayushKasera
+Drag and drop todo list: https://atrangi-kanban-board.onrender.com/
+Portfolio: https://aayush-kasera-portfolio.onrender.com/
+LinkedIn: https://www.linkedin.com/in/aayush-kasera/
