@@ -37,7 +37,6 @@ app.get("/", (req, res) => {
 // Catch-all route for unknown routes
 app.get("*", (req, res) => {
   res.status(404).send("404 Not Found");
-  res.sendFile("documentation.html", { root: __dirname });
 });
 
 // Start the server
