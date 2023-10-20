@@ -14,7 +14,7 @@ const getStudent = async (id) => {
     }
   } catch (err) {
     console.error("Error in getStudent:", err);
-    throw err; // Re-throw the error for centralized error handling
+    throw err;
   }
 };
 
@@ -25,7 +25,7 @@ const postStudent = async (name) => {
       name: name,
     });
     await student.save();
-    return `${name} added to students`;
+    return { msg: `${name} added to students` };
   } catch (err) {
     console.error("Error in postStudent:", err);
     throw err;
@@ -37,10 +37,10 @@ const putStudent = async (id, name) => {
   try {
     const answer = await student_model.findById(id);
     if (answer == null) {
-      return `${id} not found!! please give correct id`;
+      return { msg: `${id} not found!! please give correct id` };
     }
     await student_model.updateOne({ _id: id }, { $set: { name: name } });
-    return `name updated at id: ${id}`;
+    return { msg: `name updated at id: ${id}` };
   } catch (err) {
     console.error("Error in putStudent:", err);
     throw err;
@@ -68,7 +68,7 @@ router.get("/student", async (req, res) => {
     const result = await getStudent(req.query.id);
     res.send(result);
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -85,7 +85,7 @@ router.put("/student/", async (req, res) => {
       res.send(result);
     }
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -94,13 +94,13 @@ router.post("/student", async (req, res) => {
   try {
     const name = req.body.name;
     if (name == undefined) {
-      res.status(400).send("Name required!!!");
+      res.status(400).send({ err: "Name required!!!" });
     } else {
       const result = await postStudent(name);
       res.send(result);
     }
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -111,7 +111,7 @@ router.delete("/student/:id", async (req, res) => {
     const result = await deleteStudent(id);
     res.send(result);
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 

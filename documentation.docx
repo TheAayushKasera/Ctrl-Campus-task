@@ -27,7 +27,7 @@ Students
 Note: Names in the student model may be the same, so CRUD operations are based on unique student IDs.
 
 - GET /student: Get a list of all students.
-- GET /student/:id: Get a specific student by ID. Use student ID for CRUD operations.
+- GET /student/?id=student_id: Get a specific student by ID. Use student ID for CRUD operations.
 - POST /student: Add a new student. Body should contain a JSON object with the student's name.
 - PUT /student: Update a student's name. Query parameters: id (student ID), name (new name).
 - DELETE /student/:id: Delete a student by ID.
@@ -37,7 +37,7 @@ Courses
 Note: Titles in the course model may be the same, so CRUD operations are based on unique course IDs.
 
 - GET /course: Get a list of all courses.
-- GET /course/:id: Get a specific course by ID. Use course ID for CRUD operations.
+- GET /course/?id=course_id: Get a specific course by ID. Use course ID for CRUD operations.
 - POST /course: Add a new course. Body should contain a JSON object with the course's title.
 - PUT /course: Update a course's title. Query parameters: id (course ID), title (new title).
 - DELETE /course/:id: Delete a course by ID.

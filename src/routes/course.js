@@ -15,7 +15,7 @@ const getCourse = async (id) => {
     }
   } catch (err) {
     console.error("Error in getCourse:", err);
-    throw err; // Re-throw the error for centralized error handling
+    throw err;
   }
 };
 
@@ -32,7 +32,7 @@ const postCourse = async (title) => {
       student: [],
     });
     await enrollment.save();
-    return `${title} added to Courses`;
+    return { msg: `${title} added to Courses` };
   } catch (err) {
     console.error("Error in postCourse:", err);
     throw err;
@@ -44,10 +44,10 @@ const putCourse = async (id, title) => {
   try {
     const answer = await course_model.findById(id);
     if (answer == null) {
-      return `${id} not found!! please give correct id`;
+      return { msg: `${id} not found!! please give correct id` };
     }
     await course_model.updateOne({ _id: id }, { $set: { title: title } });
-    return `Title updated at id: ${id}`;
+    return { msg: `Title updated at id: ${id}` };
   } catch (err) {
     console.error("Error in putCourse:", err);
     throw err;
@@ -60,14 +60,16 @@ const deleteCourse = async (id) => {
     // Check if the course exists
     const course = await getCourse(id);
     if (!course) {
-      return `Course with id ${id} does not exist.`;
+      return { msg: `Course with id ${id} does not exist.` };
     }
 
     // Delete the associated enrollments
     await enrollment_model.deleteMany({ course: id });
 
     const result = await course_model.deleteOne({ _id: id });
-    return `Course with id ${id} deleted from record along with associated enrollments.`;
+    return {
+      msg: `Course with id ${id} deleted from record along with associated enrollments.`,
+    };
   } catch (err) {
     console.error("Error in deleteCourse:", err);
     throw err;
@@ -80,7 +82,7 @@ router.get("/course", async (req, res) => {
     const result = await getCourse(req.query.id);
     res.send(result);
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -89,13 +91,13 @@ router.post("/course", async (req, res) => {
   try {
     const title = req.body.title;
     if (title == undefined || title == "") {
-      res.status(400).send("Title required!!!");
+      res.status(400).send({ msg: "Title required!!!" });
     } else {
       const result = await postCourse(title);
       res.send(result);
     }
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -105,13 +107,15 @@ router.put("/course", async (req, res) => {
     const id = req.query.id;
     const title = req.query.title;
     if (id == undefined || title == undefined || title == "" || id == "") {
-      res.status(400).send("Id and title required and both must have value");
+      res
+        .status(400)
+        .send({ msg: "Id and title required and both must have value" });
     } else {
       const result = await putCourse(id, title);
       res.send(result);
     }
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -122,7 +126,7 @@ router.delete("/course/:id", async (req, res) => {
     const result = await deleteCourse(id);
     res.send(result);
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 

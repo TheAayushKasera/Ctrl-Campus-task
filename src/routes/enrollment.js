@@ -10,13 +10,13 @@ const postEnrollment = async (student_id, course_id) => {
     // Check if the course exists
     const course = await getCourse(course_id);
     if (course.length === 0) {
-      return `Course with id ${course_id} does not exist.`;
+      return { msg: `Course with id ${course_id} does not exist.` };
     }
 
     // Check if the student exists
     const student = await getStudent(student_id);
     if (student.length === 0) {
-      return `Student with id ${student_id} does not exist.`;
+      return { msg: `Student with id ${student_id} does not exist.` };
     }
 
     const enroll = await getEnrollment(course_id);
@@ -26,13 +26,17 @@ const postEnrollment = async (student_id, course_id) => {
         student: [student_id],
       });
       await enrollment.save();
-      return `Student with id: ${student_id} enrolled in course with id: ${course_id}`;
+      return {
+        msg: `Student with id: ${student_id} enrolled in course with id: ${course_id}`,
+      };
     } else {
       const result = await enrollment_model.updateOne(
         { course: course_id },
         { $push: { student: student_id } }
       );
-      return `Student with id: ${student_id} enrolled in course with id: ${course_id}`;
+      return {
+        msg: `Student with id: ${student_id} enrolled in course with id: ${course_id}`,
+      };
     }
   } catch (err) {
     console.error("Error in postEnrollment:", err);
@@ -68,7 +72,7 @@ router.get("/enrollment", async (req, res) => {
     const result = await getEnrollment();
     res.send(result);
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -80,7 +84,7 @@ router.post("/enrollment", async (req, res) => {
     const result = await postEnrollment(student_id, course_id);
     res.send(result);
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
@@ -91,7 +95,7 @@ router.get("/enrollment/:course_id", async (req, res) => {
     const result = await getEnrollment(course_id);
     res.send(result);
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ err: "Internal Server Error" });
   }
 });
 
